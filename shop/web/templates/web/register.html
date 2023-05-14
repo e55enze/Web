@@ -1,0 +1,26 @@
+{% extends 'web/main.html' %}
+{% load static %}
+
+{% block title_page %}
+	<title>Registration</title>
+{% endblock title_page %}
+	
+{% block content %}
+<section class="register" id="register">
+    <form action="" method="POST" class="register-form" id="register-form">
+        {% csrf_token %}
+        <h3>Registration</h3>
+        <input type="text" name="username" id="username" placeholder="Your username" class="box" />
+        <input type="email" name="email" id="email" placeholder="Your email" class="box" />
+        <input type="password" name="password" id="password" placeholder="Your password" class="box" />
+        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" class="box" />
+        <p>Forget you password <a href="#">Click here</a></p>
+        <input type="submit" value="Register" class="btn" />
+    </form>
+</section>
+{% endblock content %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script charset="utf-8" src="{% static 'js/register.js' %}"></script>
+{% endblock %}

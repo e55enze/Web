@@ -1,0 +1,83 @@
+{% load static %}
+{% block title_page %}
+    <title>Reviews</title>
+{% endblock title_page %}
+{% block content %}
+<section class="review" id="review">
+    <h1 class="heading"> Customer's <span>review</span></h1>
+    <div class="swiper review-slider">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide box">
+                <img src="{% static 'image/user_icon.png' %}" alt="">
+                <p>Great and delicious tea!</p>
+                <h3>John </h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+
+            <div class="swiper-slide box">
+                <img src="{% static 'image/user_icon.png' %}" alt="">
+                <p>Tie Guan Yin is just great! very pleasant taste. The main thing is to brew correctly</p>
+                <h3>Gremlin </h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+
+            <div class="swiper-slide box">
+                <img src="{% static 'image/user_icon.png' %}" alt="">
+                <p>Real Chinese tea. Very high quality. Thank you!</p>
+                <h3>Ira</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+
+            <div class="swiper-slide box">
+                <img src="{% static 'image/user_icon.png' %}" alt="">
+                <p>Overall a good tea. I liked the milk oolong, but the price is quite high!</p>
+                <h3>Porter </h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="fas fa-star-o"></i>
+                </div>
+            </div>
+
+            <div class="swiper-slide box">
+                <img src="{% static 'image/user_icon.png' %}" alt="">
+                <p>Delicious tea and a wide range.</p>
+                <h3>Chainyi </h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/review-slider.js' %}"></script>
+{% endblock %}

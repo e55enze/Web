@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+{% extends 'web/main.html' %}
+{% load static %}
+{% load template_filter %}
+
+{% block content %}
+<head>
+    <!-- <meta charset="utf-8"> -->
+    <meta charset="windows-1251">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% block title_page %}
+        <title>Cart</title>
+    {% endblock title_page %}
+    
+    <!-- Swiper from CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+    <!-- font awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <!-- custom css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static '/js/jsrender.js' %}"></script>
+    <script src="{% static '/js/jquery-3.6.4.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+</head>
+<body>
+
+<section class="cart-products" id="cart-products">   
+    <h1 class="heading"> Yours <span>Purchases</span> </h1>
+    <div class="product-slider">
+        <div class="wrapper">  
+            {% csrf_token %}
+            {% for product in products %}
+            <div class="box">
+                <h3>{{ product.tea }}Shu Puer Yunnan Gong Ting </h3>
+                <img height="auto" width="auto" src="{{ product.image.url }}" alt="">
+                <div class="product-info">
+                    <div class="category">Category: {{ product.category.category }}</div>
+                    <div class="fermentation">Fermentation: {{ product.category.fermentation }}</div>
+                    <div class="packaging">Packaging: {{ product.packaging }} </div>
+                </div>
+                <div class="product-data">
+                    <div>
+                        <table class="product-table">
+                            <tr> 
+                                <th>Weight</th>
+                                <th>Amount</th>
+                                <th>Price</th>
+                            </tr>
+                            {% for store in stores %}
+                                {% if store.product.id  == product.id %}
+                                <tr>
+                                    <td>{{ store.weight }} gr.
+                                        <input type="hidden" value="{{ store.weight }}" class="product-weight" />
+                                    </td>
+                                    <td> 
+                                        <!-- for products-ajax.js -->
+                                        <input type="hidden" value="{{ store.amount }}" class="product-amount" />
+                                        {{ store.amount }} 
+                                    </td>
+                                    <td> 
+                                        <input type="hidden" value="{{ store.price }}" class="product-price" />
+                                        {{ store.price }} $
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="product-desc" data-title="Софийский собор">
+                        <i  class="fa-sharp fa-solid fa-circle-info">{{ product.category.description }}</i>
+                    </div>
+                </div>
+                <div class="data-cart">
+                    <input type="hidden" value="{{ product.id }}" id="product-id" />
+                    <!-- <i class="fa-solid fa-minus"></i> -->
+                    <button type="button" id="product_dec" class="fa-solid fa-minus"></button>
+                    {% for key, values in cartdata.items %}
+                        {% if product.id == key|add:"0" %}
+                            <input type="text"  value="{{ values|get_item:'qty' }}" class="qty-input" />
+                        {% endif %}
+                    {% endfor %}
+                    <button type="button" id="product_inc" class="fa-solid fa-plus"></button>
+                    <button type="button" class="deleteFromCartBtn">delete</button>  
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="cart-order">
+            Price: <input class="total-price" type="text" value="0" /> $
+            <button type="button" class="orderBtn"><a href="" class="btn">Checkout</a></button>
+        </div>
+	</div>
+</section>
+</body>
+{% endblock content %}
+</html>

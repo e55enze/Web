@@ -1,0 +1,90 @@
+{% load static %}
+{% block title_page %}
+    <title>Shop</title>
+{% endblock title_page %}
+{% block content %}
+
+<section class="products" id="products">
+    <h1 class="heading"> Our <span>products</span> </h1>
+    <div class="sorting">
+        <div>
+            <h3>By category</h3>
+            <a href="{% url 'filter-white' %}" class="btn">White</a>
+            <a href="{% url 'filter-green' %}" class="btn">Green</a>
+            <a href="{% url 'filter-oolong' %}" class="btn">Oolong</a>
+            <a href="{% url 'filter-red' %}" class="btn">Red</a>
+            <a href="{% url 'filter-puerh' %}" class="btn">Pu-erh</a>
+        </div> 
+        <div>
+            <h3>By quantity</h3>
+            <button class="sort-amount-up"><a href="{% url 'sort-amount-up' %}" class="btn"><i class="fas fa-sort-amount-up"></i></a></button>
+            <button class="sort-amount-down"><a href="{%  'sort-amount-down' %}" class="btn"><i class="fas fa-sort-amount-down"></i></a></button>
+        </div>
+        <div> 
+            <h3>By price</h3>
+            <a href="{% url 'sort-price-up' %}"class="btn"><i class="fas fa-sort-numeric-up-alt fa-lg"> $</i></a>
+            <a href="{% url 'sort-price-down' %}"class="btn"><i class="fas fa-sort-numeric-down-alt fa-lg"> $</i></a>
+        </div>      
+    </div>
+
+    <div class="product-slider">
+        <div class="wrapper">  
+            {% csrf_token %}
+            {% for product in products %}
+            <div class="box">
+                <h3>{{ product.tea }}</h3>
+                <img height="auto" width="auto" src="{{ product.image.url }}" alt="">
+                <div class="product-info">
+                    <div class="category">Category: {{ product.category.category }}</div>
+                    
+                    <div class="fermentation">Fermentation: {{ product.category.fermentation }}</div>
+                    <div class="packaging">Packaging: {{ product.packaging }} </div>
+                </div>
+                <div class="product-data">
+                    <div class="product-table">
+                        <table>
+                            <tr> 
+                                <th scope="col">Weight</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Price</th>
+                            </tr>
+                            {% for store in stores %}
+                                {% if store.product.id  == product.id %}
+                                <tr>
+                                    <td>{{ store.weight }} gr.
+                                        <input type="hidden" value="{{ store.weight }}" class="product-weight" />
+                                    </td>
+                                    <td> 
+                                        <!-- for products-ajax.js -->
+                                        <input type="hidden" value="{{ store.amount }}" class="product-amount" />
+                                        {{ store.amount }} 
+                                    </td>
+                                    <td> 
+                                        <input type="hidden" value="{{ store.price }}" class="product-price" />
+                                        {{ store.price }} $
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="product-desc"  data-title="{{ product.description }}">
+                        <i class="fa-sharp fa-solid fa-circle-info"></i>
+                    </div>
+                </div>
+                
+                <div class="data-to-cart">
+                    <input type="hidden" value="{{ product.tea }}" id="product-title" />
+                    <input type="hidden" value="{{ product.id }}" id="product-id" />
+                    <!-- <i class="fa-solid fa-minus"></i> -->
+                    <button type="button" id="product_dec" class="fa-solid fa-minus"></button>
+                    <input type="text"  value="1" class="qty-input" />
+                    <button type="button" id="product_inc" class="fa-solid fa-plus"></button>
+                    <button type="button" class="addToCartBtn">add to cart</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}
